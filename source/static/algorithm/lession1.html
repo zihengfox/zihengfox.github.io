@@ -1,51 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css">
-    <style lang="en">
-        * {
-            padding: 0;
-            margin: 0;
-        }
-        #wrap {
-            width: 600px;
-            height: 600px;
-            position: relative;
-            margin: 60px auto;
-            background-color: #f2f2f2;
-            box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
-            font-size: 0;
-            border: 1px solid #ddd;
-        }
-        #wrap > div {
-            display: inline-block;
-            width: 60px;
-            height: 60px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            font-size: 12px;
-            text-align: center;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-        h2 {
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <h2>网页版扫雷</h2>
-    </div>
-    <div id="wrap"></div>
-</body>
+<style lang="en">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    #wrap {
+        width: 600px;
+        height: 600px;
+        position: relative;
+        margin: 60px auto;
+        background-color: #f2f2f2;
+        box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
+        font-size: 0;
+        border: 1px solid #ddd;
+    }
+    #wrap > div {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    h2 {
+        text-align: center;
+    }
+</style>
+
+<div>
+    <h2>网页版扫雷</h2>
+</div>
+<div id="wrap"></div>
+
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script>
-    var stateArr = [];
+var stateArr = [];
 
 (function($, countPerRow, rate = 0.2) {
     var fragment = document.createDocumentFragment();
@@ -193,4 +184,3 @@ function getRandomState(rateToBeFalsy) {
     return Math.random() < rateToBeFalsy;
 }
 </script>
-</html>
