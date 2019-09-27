@@ -32,16 +32,22 @@
             vertical-align: middle;
             white-space: nowrap;
         }
+        h2 {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+    <div>
+        <h2>网页版扫雷</h2>
+    </div>
     <div id="wrap"></div>
 </body>
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script>
     var stateArr = [];
 
-(function($, countPerRow, rate = 0.01) {
+(function($, countPerRow, rate = 0.2) {
     var fragment = document.createDocumentFragment();
     var maxCount = Math.pow(countPerRow, 2);
     var wrap = $('#wrap');
