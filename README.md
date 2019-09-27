@@ -9,6 +9,6 @@ npm install
 // server
 npm start
 
-// deploy && git update branch
+// deploy && git update hexo branch
 npm run build
 ```
