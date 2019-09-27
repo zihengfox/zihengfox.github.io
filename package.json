@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "update": "hexo clean && hexo g && hexo d && git add . && git commit -m 'update' && git push"
+    "deploy": "hexo clean && hexo g && hexo d",
+    "update": "git add . && git commit -m 'update' && git push",
+    "start": "hexo s",
+    "build": "npm run update && npm run deploy"
   },
   "hexo": {
     "version": "3.9.0"
