@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css">
+    <style lang="en">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        #wrap {
+            width: 600px;
+            height: 600px;
+            position: relative;
+            margin: 60px auto;
+            background-color: #f2f2f2;
+            box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
+            font-size: 0;
+            border: 1px solid #ddd;
+        }
+        #wrap > div {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap"></div>
+</body>
+<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script>
+    var stateArr = [];
+
+(function($, countPerRow, rate = 0.01) {
+    var fragment = document.createDocumentFragment();
+    var maxCount = Math.pow(countPerRow, 2);
+    var wrap = $('#wrap');
+    var wrapWidth = wrap.width();
+    var aroundDifArr = [
+        [ -1, -1], [-1, 0], [-1, 1],
+        [0, -1], [0, 1],
+        [1, -1], [1, 0], [1, 1]
+    ];
+    
+    var eachNodeWidthAndHeight = (wrapWidth / countPerRow);
+
+    do {
+        var node = document.createElement('div');
+        node.style.width = eachNodeWidthAndHeight  + 'px';
+        node.style.height = eachNodeWidthAndHeight + 'px';
+        node.style.lineHeight = eachNodeWidthAndHeight - 2 + 'px';
+        fragment.appendChild(node);
+        maxCount--;
+        stateArr.push({
+            isCover: true,
+            isBoom: getRandomState(rate)
+        });
+    } while (maxCount !== 0)
+
+    wrap.append(fragment);
+
+    wrap.on('click', function(e) {
+        if (e.target.parentNode !== this) {
+            return
+        }
+
+        var index = $(e.target).index();
+        console.log('the index of cliked div is :', index);
+
+        uncoverNode(index);
+        checkWin();
+    });
+
+    function checkWin() {
+        var coverArr = stateArr.filter(function(v) {
+            return v.isCover;
+        });
+        var coverBoomArr = coverArr.filter(function(v) {
+            return v.isBoom;
+        });
+        if (coverArr.length === coverBoomArr.length) {
+            setTimeout(function() {
+                alert('YOU WIN!!!');
+                window.location.reload();
+            }, 0);
+        }
+    }
+
+    function uncoverNode(index) {
+        // 处理当前模块
+        var state = stateArr[index];
+        if (!state.isCover) {
+            return;
+        }
+
+        state.isCover = false;
+        var target = wrap.children().eq(index).get(0);
+        if (state.isBoom) {
+            target.innerText = '炸弹';
+            setTimeout(function() {
+                alert('YOU LOSE!!!');
+                window.location.reload();
+            }, 0);
+            return;
+        } else {
+            const aroundCoverBoomCount = getAroundCoverBoomCount(index);
+            if (aroundCoverBoomCount === 0) {
+                uncoverAround(index);
+            } else {
+                target.innerText = aroundCoverBoomCount;
+            }
+        }
+        target = null;
+    }
+
+    function setEmpty(index) {
+        var target = wrap.children().eq(index).get(0);
+        target.innerText = '空';
+        stateArr[index].isCover = false;
+    }
+
+    function uncoverAround(index) {
+        setEmpty(index);
+        var x = Math.floor(index / countPerRow);
+        var y = index % countPerRow;
+        for (let i = 0; i < aroundDifArr.length; i++) {
+            var item = aroundDifArr[i];
+            var x_dif = item[0];
+            var y_dif = item[1];
+
+            var next_x = x + x_dif;
+            var next_y = y + y_dif;
+            if (isCodrValid(next_x, next_y)) {
+                var next_index = next_x * countPerRow + next_y;
+                var state = stateArr[next_index];
+                if (
+                    getAroundCoverBoomCount(next_index) === 0
+                    && state.isCover
+                    && !state.isBoom
+                ) {
+                    uncoverAround(next_index);
+                }
+            }
+        }
+    }
+
+    function getAroundCoverBoomCount(index) {
+        var c = 0;
+        var x = Math.floor(index / countPerRow);
+        var y = index % countPerRow;
+        for (let i = 0; i < aroundDifArr.length; i++) {
+            var item = aroundDifArr[i];
+            var x_dif = item[0];
+            var y_dif = item[1];
+
+            var next_x = x + x_dif;
+            var next_y = y + y_dif;
+            if (isCodrValid(next_x, next_y)) {
+                var next_index = next_x * countPerRow + next_y;
+                var state = stateArr[next_index];
+                if (state.isBoom) {
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+
+    function isCodrValid(x, y) {
+        return (x >= 0) && (x < countPerRow) && (y >= 0) && (y < countPerRow);
+    }
+
+
+})(jQuery, 10)
+
+function getRandomState(rateToBeFalsy) {
+    return Math.random() < rateToBeFalsy;
+}
+</script>
+</html>

@@ -14,6 +14,7 @@ cd hexo-blog
 npm install
 
 // 多端使用
+npm install -g hexo-cli
 git clone git@github.com:aih8/aih8.github.io.git --depth=1
 cd aih8.github.io
 npm i
