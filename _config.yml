@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-keywords:
-author: John Doe
-language: en
-timezone:
+title: 随缘补刀
+subtitle: 随缘补刀 个人博客：随便写写...
+description: write something here ...
+keywords: 
+author: 随缘补刀
+language: zh-Hans
+timezone: China
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://www.hmoons.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -79,5 +79,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/aih8/aih8.github.io.git
+  repo: git@github.com:aih8/aih8.github.io.git
   branch: master
