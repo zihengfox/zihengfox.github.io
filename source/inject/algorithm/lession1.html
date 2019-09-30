@@ -1,3 +1,11 @@
+---
+title: 网页版扫雷
+date: 2019-09-28 00:29:39
+tags:
+- js
+- 扫雷
+- 网页版
+---
 <style lang="en">
     * {
         padding: 0;
@@ -28,17 +36,69 @@
         text-align: center;
     }
 </style>
-
-<div>
-    <h2>网页版扫雷</h2>
-</div>
+<!-- <div>
+    <input id="numberNode" type="number" placeholder="input count per row">
+    <button onclick="changeCountPerRow()">changeCountPerRow</button>
+</div> -->
 <div id="wrap"></div>
-
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script>
-var stateArr = [];
+function changeCountPerRow() {
+    var numberNode = document.getElementById('numberNode');
+    var value = numberNode.value;
+    if (!value) {
+        return;
+    } else if (+value !== parseInt(value)) {
+        alert('please input a int number');
+        return;
+    } else if (+value < 10) {
+        alert('number should larger than 10');
+        return;
+    } else if (+value > 40) {
+        alert('number should smaller than 40');
+        return;
+    }
+    changeUrlParams(value);
+}
 
-(function($, countPerRow, rate = 0.2) {
+function changeUrlParams(
+    countPerRow = getQueryParam('countPerRow'),
+    rate = getQueryParam('rate')
+) {
+    window.location.href = '?countPerRow=' + countPerRow + '&rate=' + rate;
+}
+</script>
+<script>
+var countPerRow = setCountPerRow();
+var rate = setRate();
+
+function setRate() {
+    var defaultRate = 0.1;
+    var queryRate = +getQueryParam('rate');
+    if (!rate) {
+        rate = 0.1;
+    } else if (rate < 0.1) {
+        rate = 0.1;
+    } else if (rate > 0.9) {
+        rate = 0.9;
+    }
+    return rate;
+}
+
+function setCountPerRow() {
+    var defaultCount = 25;
+    var queryCount = +getQueryParam('countPerRow');
+    if (!queryCount) {
+        queryCount = defaultCount;
+    } else if (queryCount < 10) {
+        queryCount = 10;
+    } else if (queryCount > 40) {
+        queryCount = 40;
+    }
+    return queryCount;
+}
+
+(function($) {
     var fragment = document.createDocumentFragment();
     var maxCount = Math.pow(countPerRow, 2);
     var wrap = $('#wrap');
@@ -48,6 +108,7 @@ var stateArr = [];
         [0, -1], [0, 1],
         [1, -1], [1, 0], [1, 1]
     ];
+    var stateArr = [];
     
     var eachNodeWidthAndHeight = (wrapWidth / countPerRow);
 
@@ -120,14 +181,14 @@ var stateArr = [];
         target = null;
     }
 
-    function setEmpty(index) {
+    function uncoverItem(index, count) {
         var target = wrap.children().eq(index).get(0);
-        target.innerText = '空';
+        target.innerText = count || '空';
         stateArr[index].isCover = false;
     }
 
     function uncoverAround(index) {
-        setEmpty(index);
+        uncoverItem(index);
         var x = Math.floor(index / countPerRow);
         var y = index % countPerRow;
         for (let i = 0; i < aroundDifArr.length; i++) {
@@ -140,12 +201,13 @@ var stateArr = [];
             if (isCodrValid(next_x, next_y)) {
                 var next_index = next_x * countPerRow + next_y;
                 var state = stateArr[next_index];
-                if (
-                    getAroundCoverBoomCount(next_index) === 0
-                    && state.isCover
-                    && !state.isBoom
-                ) {
-                    uncoverAround(next_index);
+                if (state.isCover && !state.isBoom) {
+                    var aroundCoverBoomCount = getAroundCoverBoomCount(next_index);
+                    if (aroundCoverBoomCount === 0) {
+                        uncoverAround(next_index);
+                    } else {
+                        uncoverItem(next_index, aroundCoverBoomCount);
+                    }
                 }
             }
         }
@@ -178,9 +240,17 @@ var stateArr = [];
     }
 
 
-})(jQuery, 10)
+})(jQuery)
 
 function getRandomState(rateToBeFalsy) {
     return Math.random() < rateToBeFalsy;
+}
+
+function getQueryParam(param) {
+    var search = window.location.search;
+    if (search && search.indexOf('?') === 0) {
+        search = search.substr(1);
+    }
+    return new URLSearchParams(search).get(param);
 }
 </script>
