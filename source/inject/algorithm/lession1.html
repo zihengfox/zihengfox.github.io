@@ -60,6 +60,7 @@ tags:
         padding-left: 8px;
         cursor: pointer;
         transition: color 0.2s;
+        user-select: none;
     }
 
     #forRight ul li:hover {
@@ -99,6 +100,10 @@ tags:
             //return false为了屏蔽默认事件
             return false;
         })
+
+        $(document).on('click', function () {
+            forRight.style.display = 'none';
+        });
     })
 
     
@@ -196,10 +201,10 @@ function setCountPerRow() {
 
         var index = $(e.target).index();
         var state = stateArr[index];
-        if (state.flag && !state.isCover) {
+        if (state.flag || !state.isCover) {
             return
         }
-        console.log('the index of cliked div is :', index);
+        console.log('the index of cliked div is :', index, state);
 
         uncoverNode(index);
         checkWin();
