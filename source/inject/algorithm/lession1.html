@@ -35,8 +35,39 @@ tags:
         vertical-align: middle;
         white-space: nowrap;
     }
+
+    #wrap .red {
+        color: red;
+    }
     h2 {
         text-align: center;
+    }
+
+    #forRight {
+        position: fixed;
+        display: none;
+        left: 10%;
+        top: 10%;
+        background-color: #fafafa;
+        border-radius: 2px;
+        width: 90px;
+        overflow: hidden;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.1);
+    }
+
+    #forRight ul li {
+        list-style: none;
+        padding-left: 8px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    #forRight ul li:hover {
+        color: #777;
+    }
+
+    #forRight ul li + li {
+        border-top: 1px solid #eee;
     }
 </style>
 <!-- <div>
@@ -44,7 +75,34 @@ tags:
     <button onclick="changeCountPerRow()">changeCountPerRow</button>
 </div> -->
 <div id="wrap"></div>
+<div id="forRight">
+    <ul>
+        <li id="setFlagTrue" >插旗子</li>
+        <li id="setFlagFalse" >取消旗子</li>
+    </ul>
+</div>
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script>
+    $(function() {
+        console.log('----------->');
+        var forRight = document.getElementById('forRight');
+        $('#wrap').on('contextmenu', function(e) {
+            
+            var index = $(e.target).index();
+            console.log(this,index);
+            //显示菜单
+            forRight.style.display = "block";
+            //菜单定位
+            forRight.style.left = e.pageX + "px";
+            forRight.style.top = e.pageY + "px";
+            $(forRight).attr('index', index);
+            //return false为了屏蔽默认事件
+            return false;
+        })
+    })
+
+    
+</script>
 <script>
 function changeCountPerRow() {
     var numberNode = document.getElementById('numberNode');
@@ -124,7 +182,8 @@ function setCountPerRow() {
         maxCount--;
         stateArr.push({
             isCover: true,
-            isBoom: getRandomState(rate)
+            isBoom: getRandomState(rate),
+            flag: false,
         });
     } while (maxCount !== 0)
 
@@ -136,11 +195,34 @@ function setCountPerRow() {
         }
 
         var index = $(e.target).index();
+        var state = stateArr[index];
+        if (state.flag && !state.isCover) {
+            return
+        }
         console.log('the index of cliked div is :', index);
 
         uncoverNode(index);
         checkWin();
     });
+
+    $('#setFlagTrue').on('click', () => setFlagStatus(true));
+    $('#setFlagFalse').on('click', () => setFlagStatus(false));
+    function setFlagStatus(nextStatus) {
+        $('#forRight').hide();
+        var index = +$('#forRight').attr('index');
+        var state = stateArr[index];
+        if (state.flag === nextStatus || !state.isCover) {
+            return
+        }
+        console.log('click', nextStatus)
+        var target = $('#wrap').children().eq(index);
+        if (nextStatus) {
+            target.html('*').addClass('red');
+        } else {
+            target.html('').removeClass('red');
+        }
+        state.flag = nextStatus;
+    }
 
     function checkWin() {
         var coverArr = stateArr.filter(function(v) {
