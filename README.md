@@ -1,16 +1,13 @@
 ### 命令工具
 ```shell
 // init
-npm install -g hexo-cli
-hexo init hexo-blog
-cd hexo-blog
 npm install
 
 // server
 npm start
 
-// deploy && git update hexo branch
-npm run build
+// git update hexo branch && github actions been triggered and master will be updated.
+git push
 ```
 
 ### 目录结构
