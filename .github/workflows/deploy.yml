@@ -33,5 +33,12 @@ jobs:
     - name: install packages
       run: npm i
     
+    # hexo clean && hexo g && hexo d
+    - name: clean
+      run: ./node_modules/.bin/hexo clean
+    
+    - name: generate
+      run: ./node_modules/.bin/hexo g
+    
     - name: deploy
-      run: ./node_modules/.bin/hexo run deploy
+      run: ./node_modules/.bin/hexo d
