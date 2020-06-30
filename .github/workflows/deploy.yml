@@ -34,4 +34,4 @@ jobs:
       run: npm i
     
     - name: deploy
-      run: pwd
+      run: ./node_modules/.bin/hexo run deploy
