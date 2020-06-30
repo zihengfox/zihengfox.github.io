@@ -21,11 +21,11 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Cache multiple paths
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      uses: actions/cache@v2
+      with:
+        path: |
+          **/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
     
     # check env version
     - name: check node version
