@@ -28,7 +28,7 @@ jobs:
       run: npm --version
       
     - name: install hexo-cli
-      run: npm install -g hexo-cli
+      run: npm i hexo-cli
     
     - name: install packages
       run: npm i
