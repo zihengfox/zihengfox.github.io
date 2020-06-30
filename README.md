@@ -6,7 +6,7 @@ npm install
 // server
 npm start
 
-// git update hexo branch && github actions been triggered and master will be updated.
+// git update hexo branch && github actions && master will be updated.
 git push
 ```
 
