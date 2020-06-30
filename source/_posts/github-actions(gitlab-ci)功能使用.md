@@ -3,13 +3,13 @@ title: gitlab && github actions 开发小功能
 date: 2020-06-30 21:40:08
 tags:
 ---
-## 1. 持续集成（Continuous integration）
+## 持续集成（Continuous integration）
 频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。
 
-## 2. 持续部署（Continuous deployment）
+## 持续部署（Continuous deployment）
 持续部署建立在持续集成的基础上。 当提交新代码和通过你的 CI 测试时，代码将自动部署到生产环境中。 使用 GitHub Actions，可以创建自定义的 CD 工作流，以便从你的仓库自动部署代码到任何云、自托管服务或平台。 CD 通过自动化部署过程节省开发人员的时间，并更快地向你的客户部署经过测试的、稳定的代码变更。
 
-## 3. GitHub Actions 的一些术语
+## GitHub Actions 的一些术语
 #### workflow （工作流程）
 <small>持续集成一次运行的过程，就是一个 workflow</small>
 #### job （任务）
@@ -19,11 +19,11 @@ tags:
 #### action （动作）：
 <small>每个 step 可以依次执行一个或多个命令（action）。 你可以创建自己的action、使用 GitHub 社区共享的action</small>
 
-## 4. 理解
+## 理解
 - 监听到git事件时，可手动或自动执行任务（编译、测试、打包、部署等）
 - 设置为定时任务，自动执行
 
-## 5. 使用该功能可以实现的功能：
+## 使用该功能可以实现的功能：
 - [x] 完成项目的打包、编译、部署
 - [ ] 定时发送天气邮件
 - [ ] 定时发送小说的更新章节
