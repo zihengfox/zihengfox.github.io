@@ -14,7 +14,7 @@
             <div class="control-group">
                 <label class="control-label">输入{{index + 1}}</label>
                 <div class="controls">
-                    <input :value="item.value" v-on:blur="change(index, $event.target.value)" type="number">
+                    <input :value="item.value" v-on:input="change(index, $event.target.value)" type="number">
                 </div>
             </div>
         </div>
@@ -36,19 +36,8 @@
             }],
             sum: 100
         },
-        computed: {
-            key: function() {
-                return md5((this.user_id || '') + (this.auth || ''))
-            }
-        },
-        watch: {
-            values: function(a, b) {
-                console.log("====>", a,b)
-            }
-        },
         methods: {
             change: function(index, value) {
-                console.log('----->', index, value);
                 const values = this.values;
                 const len = values.length;
                 const sum = this.sum;
@@ -61,7 +50,7 @@
                 }
                 let diffValue = values[index].value - value;
                 console.log('diff', diffValue)
-                originValue !== 0 && this.updateValuesArrAt(index, value);
+                this.updateValuesArrAt(index, value);
                 
                 for (let i = 1; i < len; i++) {
                     if (diffValue === 0) { break; }
