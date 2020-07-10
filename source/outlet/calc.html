@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" integrity="sha384-4FeI0trTH/PCsLWrGCD1mScoFu9Jf2NdknFdFoJhXZFwsvzZ3Bo5sAh7+zL8Xgnd" crossorigin="anonymous">
+    
+</head>
+<body>
+    <div id="app">
+        <div v-for="(item, index) in values">
+            <div class="control-group">
+                <label class="control-label">输入{{index + 1}}</label>
+                <div class="controls">
+                    <input :value="item.value" v-on:blur="change(index, $event.target.value)" type="number">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.js"></script>
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            values: [{
+                value: 30
+            }, {
+                value: 30
+            }, {
+                value: 40
+            }],
+            sum: 100
+        },
+        computed: {
+            key: function() {
+                return md5((this.user_id || '') + (this.auth || ''))
+            }
+        },
+        watch: {
+            values: function(a, b) {
+                console.log("====>", a,b)
+            }
+        },
+        methods: {
+            change: function(index, value) {
+                console.log('----->', index, value);
+                const values = this.values;
+                const len = values.length;
+                const sum = this.sum;
+                const originValue = value;
+                value = +value || 0;
+                if (value > sum) {
+                    value = sum;
+                } else if (value < 0) {
+                    value = 0;
+                }
+                let diffValue = values[index].value - value;
+                console.log('diff', diffValue)
+                originValue !== 0 && this.updateValuesArrAt(index, value);
+                
+                for (let i = 1; i < len; i++) {
+                    if (diffValue === 0) { break; }
+                    const j = (i + index) % len;
+                    let currentItemValue = values[j].value;
+                    console.log('====>', j, currentItemValue)
+                    let preCalcNextValue = currentItemValue + diffValue;
+                    if (preCalcNextValue > sum) {
+                        diffValue -= sum - currentItemValue;
+                        this.updateValuesArrAt(j, sum);
+                    } else if (preCalcNextValue < 0) {
+                        diffValue += currentItemValue;
+                        this.updateValuesArrAt(j, 0);
+                    } else {
+                        diffValue = 0;
+                        this.updateValuesArrAt(j, preCalcNextValue);
+                    }
+                }
+                this.$forceUpdate();
+            },
+            updateValuesArrAt: function(index, nextValue) {
+                console.log(index, nextValue, this.values)
+                this.$set(this.values[index], 'value', nextValue);
+            }
+        }
+    });
+</script>
+</html>
