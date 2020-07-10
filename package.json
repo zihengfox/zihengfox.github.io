@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "deploy": "hexo clean && hexo g && hexo d",
-    "update": "git add . && git commit -m 'update' && git push",
-    "start": "hexo s",
-    "build": "npm run update && npm run deploy"
+    "start": "node_modules/.bin/hexo.cmd s",
+    "update": "git add . && git commit -m 'update' && git push"
   },
   "hexo": {
     "version": "3.9.0"
@@ -14,6 +12,7 @@
   "dependencies": {
     "hexo": "^3.9.0",
     "hexo-asset-image": "^1.0.0",
+    "hexo-cli": "^3.1.0",
     "hexo-deployer-git": "^2.0.0",
     "hexo-generator-archive": "^0.1.5",
     "hexo-generator-baidu-sitemap": "^0.1.6",
