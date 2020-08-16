@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content=",,,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="* {         padding: 0;         margin: 0;     }     body {         min-width: 680px;     }     #wrap {         width: 600px;         height: 600px;         position: relative;         margin: 60">
+<meta name="keywords" content="js,扫雷,网页版">
+<meta property="og:type" content="website">
+<meta property="og:title" content="网页版扫雷">
+<meta property="og:url" content="http://www.hmoons.com/inject/algorithm/lession1.html">
+<meta property="og:site_name" content="随缘补刀">
+<meta property="og:description" content="* {         padding: 0;         margin: 0;     }     body {         min-width: 680px;     }     #wrap {         width: 600px;         height: 600px;         position: relative;         margin: 60">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-16T13:13:32.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网页版扫雷">
+<meta name="twitter:description" content="* {         padding: 0;         margin: 0;     }     body {         min-width: 680px;     }     #wrap {         width: 600px;         height: 600px;         position: relative;         margin: 60">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hmoons.com/inject/algorithm/lession1.html">
+
+
+
+
+
+  <title>网页版扫雷 | 随缘补刀</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">随缘补刀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">随缘补刀 个人博客：随便写写...</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">网页版扫雷</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <style lang="en">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        min-width: 680px;
+    }
+    #wrap {
+        width: 600px;
+        height: 600px;
+        position: relative;
+        margin: 60px auto;
+        background-color: #f2f2f2;
+        box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
+        font-size: 0;
+        border: 1px solid #ddd;
+    }
+    #wrap > div {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    #wrap .red {
+        color: red;
+    }
+    h2 {
+        text-align: center;
+    }
+
+    #forRight {
+        position: fixed;
+        display: none;
+        left: 10%;
+        top: 10%;
+        background-color: #fafafa;
+        border-radius: 2px;
+        width: 90px;
+        overflow: hidden;
+        box-shadow: 0 0 10px 2px rgba(0,0,0,.1);
+    }
+
+    #forRight ul li {
+        list-style: none;
+        padding-left: 8px;
+        cursor: pointer;
+        transition: color 0.2s;
+        user-select: none;
+    }
+
+    #forRight ul li:hover {
+        color: #777;
+    }
+
+    #forRight ul li + li {
+        border-top: 1px solid #eee;
+    }
+</style>
+<!-- <div>
+    <input id="numberNode" type="number" placeholder="input count per row">
+    <button onclick="changeCountPerRow()">changeCountPerRow</button>
+</div> -->
+<div id="wrap"></div>
+<div id="forRight">
+    <ul>
+        <li id="setFlagTrue">插旗子</li>
+        <li id="setFlagFalse">取消旗子</li>
+    </ul>
+</div>
+<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script>
+    $(function() {
+        console.log('----------->');
+        var forRight = document.getElementById('forRight');
+        $('#wrap').on('contextmenu', function(e) {
+            
+            var index = $(e.target).index();
+            console.log(this,index);
+            //显示菜单
+            forRight.style.display = "block";
+            //菜单定位
+            forRight.style.left = e.pageX + "px";
+            forRight.style.top = e.pageY + "px";
+            $(forRight).attr('index', index);
+            //return false为了屏蔽默认事件
+            return false;
+        })
+
+        $(document).on('click', function () {
+            forRight.style.display = 'none';
+        });
+    })
+
+    
+</script>
+<script>
+function changeCountPerRow() {
+    var numberNode = document.getElementById('numberNode');
+    var value = numberNode.value;
+    if (!value) {
+        return;
+    } else if (+value !== parseInt(value)) {
+        alert('please input a int number');
+        return;
+    } else if (+value < 10) {
+        alert('number should larger than 10');
+        return;
+    } else if (+value > 40) {
+        alert('number should smaller than 40');
+        return;
+    }
+    changeUrlParams(value);
+}
+
+function changeUrlParams(
+    countPerRow = getQueryParam('countPerRow'),
+    rate = getQueryParam('rate')
+) {
+    window.location.href = '?countPerRow=' + countPerRow + '&rate=' + rate;
+}
+</script>
+<script>
+var countPerRow = setCountPerRow();
+var rate = setRate();
+
+function setRate() {
+    var defaultRate = 0.1;
+    var queryRate = +getQueryParam('rate');
+    if (!rate) {
+        rate = 0.1;
+    } else if (rate < 0.1) {
+        rate = 0.1;
+    } else if (rate > 0.9) {
+        rate = 0.9;
+    }
+    return rate;
+}
+
+function setCountPerRow() {
+    var defaultCount = 25;
+    var queryCount = +getQueryParam('countPerRow');
+    if (!queryCount) {
+        queryCount = defaultCount;
+    } else if (queryCount < 10) {
+        queryCount = 10;
+    } else if (queryCount > 40) {
+        queryCount = 40;
+    }
+    return queryCount;
+}
+
+(function($) {
+    var fragment = document.createDocumentFragment();
+    var maxCount = Math.pow(countPerRow, 2);
+    var wrap = $('#wrap');
+    var wrapWidth = wrap.width();
+    var aroundDifArr = [
+        [ -1, -1], [-1, 0], [-1, 1],
+        [0, -1], [0, 1],
+        [1, -1], [1, 0], [1, 1]
+    ];
+    var stateArr = [];
+    
+    var eachNodeWidthAndHeight = (wrapWidth / countPerRow);
+
+    do {
+        var node = document.createElement('div');
+        node.style.width = eachNodeWidthAndHeight  + 'px';
+        node.style.height = eachNodeWidthAndHeight + 'px';
+        node.style.lineHeight = eachNodeWidthAndHeight - 2 + 'px';
+        fragment.appendChild(node);
+        maxCount--;
+        stateArr.push({
+            isCover: true,
+            isBoom: getRandomState(rate),
+            flag: false,
+        });
+    } while (maxCount !== 0)
+
+    wrap.append(fragment);
+
+    wrap.on('click', function(e) {
+        if (e.target.parentNode !== this) {
+            return
+        }
+
+        var index = $(e.target).index();
+        var state = stateArr[index];
+        if (state.flag || !state.isCover) {
+            return
+        }
+        console.log('the index of cliked div is :', index, state);
+
+        uncoverNode(index);
+        checkWin();
+    });
+
+    $('#setFlagTrue').on('click', () => setFlagStatus(true));
+    $('#setFlagFalse').on('click', () => setFlagStatus(false));
+    function setFlagStatus(nextStatus) {
+        $('#forRight').hide();
+        var index = +$('#forRight').attr('index');
+        var state = stateArr[index];
+        if (state.flag === nextStatus || !state.isCover) {
+            return
+        }
+        console.log('click', nextStatus)
+        var target = $('#wrap').children().eq(index);
+        if (nextStatus) {
+            target.html('*').addClass('red');
+        } else {
+            target.html('').removeClass('red');
+        }
+        state.flag = nextStatus;
+    }
+
+    function checkWin() {
+        var coverArr = stateArr.filter(function(v) {
+            return v.isCover;
+        });
+        var coverBoomArr = coverArr.filter(function(v) {
+            return v.isBoom;
+        });
+        if (coverArr.length === coverBoomArr.length) {
+            setTimeout(function() {
+                alert('YOU WIN!!!');
+                window.location.reload();
+            }, 0);
+        }
+    }
+
+    function uncoverNode(index) {
+        // 处理当前模块
+        var state = stateArr[index];
+        if (!state.isCover) {
+            return;
+        }
+
+        state.isCover = false;
+        var target = wrap.children().eq(index).get(0);
+        if (state.isBoom) {
+            target.innerText = '炸弹';
+            setTimeout(function() {
+                alert('YOU LOSE!!!');
+                window.location.reload();
+            }, 0);
+            return;
+        } else {
+            const aroundCoverBoomCount = getAroundCoverBoomCount(index);
+            if (aroundCoverBoomCount === 0) {
+                uncoverAround(index);
+            } else {
+                target.innerText = aroundCoverBoomCount;
+            }
+        }
+        target = null;
+    }
+
+    function uncoverItem(index, count) {
+        var target = wrap.children().eq(index).get(0);
+        target.innerText = count || '空';
+        stateArr[index].isCover = false;
+    }
+
+    function uncoverAround(index) {
+        uncoverItem(index);
+        var x = Math.floor(index / countPerRow);
+        var y = index % countPerRow;
+        for (let i = 0; i < aroundDifArr.length; i++) {
+            var item = aroundDifArr[i];
+            var x_dif = item[0];
+            var y_dif = item[1];
+
+            var next_x = x + x_dif;
+            var next_y = y + y_dif;
+            if (isCodrValid(next_x, next_y)) {
+                var next_index = next_x * countPerRow + next_y;
+                var state = stateArr[next_index];
+                if (state.isCover && !state.isBoom) {
+                    var aroundCoverBoomCount = getAroundCoverBoomCount(next_index);
+                    if (aroundCoverBoomCount === 0) {
+                        uncoverAround(next_index);
+                    } else {
+                        uncoverItem(next_index, aroundCoverBoomCount);
+                    }
+                }
+            }
+        }
+    }
+
+    function getAroundCoverBoomCount(index) {
+        var c = 0;
+        var x = Math.floor(index / countPerRow);
+        var y = index % countPerRow;
+        for (let i = 0; i < aroundDifArr.length; i++) {
+            var item = aroundDifArr[i];
+            var x_dif = item[0];
+            var y_dif = item[1];
+
+            var next_x = x + x_dif;
+            var next_y = y + y_dif;
+            if (isCodrValid(next_x, next_y)) {
+                var next_index = next_x * countPerRow + next_y;
+                var state = stateArr[next_index];
+                if (state.isBoom) {
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+
+    function isCodrValid(x, y) {
+        return (x >= 0) && (x < countPerRow) && (y >= 0) && (y < countPerRow);
+    }
+
+
+})(jQuery)
+
+function getRandomState(rateToBeFalsy) {
+    return Math.random() < rateToBeFalsy;
+}
+
+function getQueryParam(param) {
+    var search = window.location.search;
+    if (search && search.indexOf('?') === 0) {
+        search = search.substr(1);
+    }
+    return new URLSearchParams(search).get(param);
+}
+</script>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://cdn13.mudu.tv/assets/upload/editor/156956940814741.png" alt="随缘补刀">
+          <p class="site-author-name" itemprop="name">随缘补刀</p>
+           
+              <p class="site-description motion-element" itemprop="description">write something here ...</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">随缘补刀</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

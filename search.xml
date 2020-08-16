@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>gitlab &amp;&amp; github actions 开发小功能</title>
+    <url>/2020/06/30/github-actions(gitlab-ci)%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="持续集成（Continuous-integration）"><a href="#持续集成（Continuous-integration）" class="headerlink" title="持续集成（Continuous integration）"></a>持续集成（Continuous integration）</h2><p>频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。</p>
+<h2 id="持续部署（Continuous-deployment）"><a href="#持续部署（Continuous-deployment）" class="headerlink" title="持续部署（Continuous deployment）"></a>持续部署（Continuous deployment）</h2><p>持续部署建立在持续集成的基础上。 当提交新代码和通过你的 CI 测试时，代码将自动部署到生产环境中。 使用 GitHub Actions，可以创建自定义的 CD 工作流，以便从你的仓库自动部署代码到任何云、自托管服务或平台。 CD 通过自动化部署过程节省开发人员的时间，并更快地向你的客户部署经过测试的、稳定的代码变更。</p>
+<h2 id="GitHub-Actions-的一些术语"><a href="#GitHub-Actions-的一些术语" class="headerlink" title="GitHub Actions 的一些术语"></a>GitHub Actions 的一些术语</h2><ul>
+<li><p>workflow （工作流程）<br>持续集成一次运行的过程，就是一个 workflow</p>
+</li>
+<li><p>job （任务）<br>一个 workflow 由一个或多个 jobs 构成，含义是一次持续集成的运行，可以完成多个任务</p>
+</li>
+<li><p>step（步骤）：<br>每个 job 由多个 step 构成，一步步完成。 一个工作中的每个步骤都在相同的虚拟环境中执行，从而允许使用文件系统共享信息</p>
+</li>
+<li><p>action （动作）：<br>每个 step 可以依次执行一个或多个命令（action）。 你可以创建自己的action、使用 GitHub 社区共享的action</p>
+</li>
+</ul>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>上述的内容是任务的组成，以及可以达成的目标</p>
+<ul>
+<li>监听到git事件时，可手动或自动执行任务（编译、测试、打包、部署等）</li>
+<li>设置为定时任务，自动执行</li>
+</ul>
+<h2 id="使用该功能可以实现的功能："><a href="#使用该功能可以实现的功能：" class="headerlink" title="使用该功能可以实现的功能："></a>使用该功能可以实现的功能：</h2><ul>
+<li><input checked disabled type="checkbox"> 完成项目的打包、编译、部署</li>
+<li><input disabled type="checkbox"> 定时发送天气邮件</li>
+<li><input disabled type="checkbox"> 定时发送小说的更新章节</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/09/27/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>learn something about hexo cli</title>
+    <url>/2019/09/27/learn-something-about-hexo-cli/</url>
+    <content><![CDATA[<h3 id="命令工具"><a href="#命令工具" class="headerlink" title="命令工具"></a>命令工具</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">// init</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo init hexo-blog</span><br><span class="line">cd hexo-blog</span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line">// 多端使用</span><br><span class="line">npm install -g hexo-cli</span><br><span class="line">git clone git@github.com:aih8/aih8.github.io.git --depth=1</span><br><span class="line">cd aih8.github.io</span><br><span class="line">npm i</span><br><span class="line"></span><br><span class="line">// localhost server on 4200</span><br><span class="line">npm start</span><br><span class="line"></span><br><span class="line">// deploy &amp;&amp; git update hexo branch</span><br><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>hexo-cli</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tips</title>
+    <url>/2019/11/18/tips/</url>
+    <content><![CDATA[<h2 id="如何解决国内下载-更新docker过慢的问题"><a href="#如何解决国内下载-更新docker过慢的问题" class="headerlink" title="如何解决国内下载|更新docker过慢的问题"></a>如何解决国内下载|更新docker过慢的问题</h2><p><a href="https://www.mf8.biz/install-docker-ce/" target="_blank" rel="noopener">链接地址</a></p>
+<h2 id="无vim命令时替换镜像源"><a href="#无vim命令时替换镜像源" class="headerlink" title="无vim命令时替换镜像源"></a>无vim命令时替换镜像源</h2><p><a href="https://mirrors.ustc.edu.cn/help/debian.html" target="_blank" rel="noopener">链接地址</a></p>
+<h2 id="ubuntu-源-替换"><a href="#ubuntu-源-替换" class="headerlink" title="ubuntu 源 替换"></a>ubuntu 源 替换</h2><p><a href="https://blog.csdn.net/xiangxianghehe/article/details/80112149" target="_blank" rel="noopener">链接地址</a></p>
+]]></content>
+      <tags>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网页版扫雷</title>
+    <url>/2019/09/27/%E7%BD%91%E9%A1%B5%E7%89%88%E6%89%AB%E9%9B%B7/</url>
+    <content><![CDATA[<h2 id="网页版扫雷"><a href="#网页版扫雷" class="headerlink" title="网页版扫雷"></a>网页版扫雷</h2><p>代码地址： <a href="https://github.com/aih8/aih8.github.io/blob/hexo/source/inject/algorithm/lession1.html" target="_blank" rel="noopener">https://github.com/aih8/aih8.github.io/blob/hexo/source/inject/algorithm/lession1.html</a><br>体验地址： <a href="/inject/algorithm/lession1.html">https://www.hmoons.com/inject/algorithm/lession1.html</a></p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+        <tag>扫雷</tag>
+        <tag>网页版</tag>
+      </tags>
+  </entry>
+</search>

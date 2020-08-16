@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/normalize/8.0.1/normalize.min.css">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h1 {
+            padding-top: 50px;
+        }
+        .tac {
+            text-align: center;
+        }
+        .wrap {
+            margin: 40px auto;
+            max-width: 400px;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 class="tac">关于 思否 数据联动问题的回答 demo</h1>
+        <br>
+        <p class="tac">原问题链接：<a href="https://segmentfault.com/q/1010000023150265?_ea=55759637">数据处理的问题</a></p>
+        <br>
+        <div class="wrap" v-for="(item, index) in values">
+            <div class="control-group">
+                <label class="control-label">输入<span v-html="index + 1"></span></label>
+                <div class="controls">
+                    <input :value="item.value" v-on:input="change(index, $event.target.value)" type="number">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.staticfile.org/vue/2.6.10/vue.js"></script>
+<script src="https://cdn.staticfile.org/blueimp-md5/2.17.0/js/md5.min.js"></script>
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            values: [{
+                value: 30
+            }, {
+                value: 30
+            }, {
+                value: 40
+            }],
+            sum: 100
+        },
+        methods: {
+            change: function(index, value) {
+                const values = this.values;
+                const len = values.length;
+                const sum = this.sum;
+                const originValue = value;
+                value = +value || 0;
+                if (value > sum) {
+                    value = sum;
+                } else if (value < 0) {
+                    value = 0;
+                }
+                let diffValue = values[index].value - value;
+                console.log('diff', diffValue)
+                this.updateValuesArrAt(index, value);
+                
+                for (let i = 1; i < len; i++) {
+                    if (diffValue === 0) { break; }
+                    const j = (i + index) % len;
+                    let currentItemValue = values[j].value;
+                    console.log('====>', j, currentItemValue)
+                    let preCalcNextValue = currentItemValue + diffValue;
+                    if (preCalcNextValue > sum) {
+                        diffValue -= sum - currentItemValue;
+                        this.updateValuesArrAt(j, sum);
+                    } else if (preCalcNextValue < 0) {
+                        diffValue += currentItemValue;
+                        this.updateValuesArrAt(j, 0);
+                    } else {
+                        diffValue = 0;
+                        this.updateValuesArrAt(j, preCalcNextValue);
+                    }
+                }
+                this.$forceUpdate();
+            },
+            updateValuesArrAt: function(index, nextValue) {
+                console.log(index, nextValue, this.values)
+                this.$set(this.values[index], 'value', nextValue);
+            }
+        }
+    });
+</script>
+</html>

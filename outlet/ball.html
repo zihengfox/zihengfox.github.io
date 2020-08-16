@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html, body {
+            height: 100%;
+        }
+        .wrap {
+            height: 100%;
+        }
+        #canvasId {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <canvas id="canvasId"></canvas>
+    </div>
+</body>
+<script>
+    var canvasNode = document.querySelector('#canvasId');
+    var ctx = canvasNode.getContext('2d');
+
+    function Stage(node) {
+        this.width = 0;
+        this.height = 0;
+
+        this.setParams(node)
+    }
+
+    Stage.prototype = {
+        setParams: function(node) {
+            this.width = node.clientWidth;
+            this.height = node.clientHeight;
+        },
+    }
+
+    function Ball(r) {
+        this.r = r; // 半径
+    }
+
+</script>
+</html>

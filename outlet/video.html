@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+<body>
+    <div id="live-player"></div>
+    <p id="ua"></p>
+</body>
+<script src="https://static.mudu.tv/mudu-player/0.27.18/mudu-player.js?1212"></script>
+<script>
+    muduPlayer('live-player').setup({
+        file: 'https://myun-hw-s3.myun.tv/melj80jz/09g4dg48/1589357277293935482.m3u8',
+        plugin: {
+                x5: {
+                    layer: true, inline: false // 手机端x5内核浏览器 不显示 弹幕、关注、门户等按钮
+                }
+            },
+        isLive: false,
+        controls: true,
+        image: 'https://cdn13.mudu.tv/assets/upload/158822618986721.jpg',
+        autoplay: false,
+    })
+    document.getElementById('ua').innerText = navigator.userAgent
+</script>
+</html>

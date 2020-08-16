@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="持续集成（Continuous integration）频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。 持续部署（Continuous de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab &amp;&amp; github actions 开发小功能">
+<meta property="og:url" content="http://www.hmoons.com/2020/06/30/github-actions(gitlab-ci)功能使用/index.html">
+<meta property="og:site_name" content="随缘补刀">
+<meta property="og:description" content="持续集成（Continuous integration）频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。 持续部署（Continuous de">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-16T13:13:32.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gitlab &amp;&amp; github actions 开发小功能">
+<meta name="twitter:description" content="持续集成（Continuous integration）频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。 持续部署（Continuous de">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hmoons.com/2020/06/30/github-actions(gitlab-ci)功能使用/">
+
+
+
+
+
+  <title>gitlab && github actions 开发小功能 | 随缘补刀</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">随缘补刀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">随缘补刀 个人博客：随便写写...</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hmoons.com/2020/06/30/github-actions(gitlab-ci)功能使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="随缘补刀">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://cdn13.mudu.tv/assets/upload/editor/156956940814741.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随缘补刀">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gitlab && github actions 开发小功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-30T13:40:08+00:00">
+                2020-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="持续集成（Continuous-integration）"><a href="#持续集成（Continuous-integration）" class="headerlink" title="持续集成（Continuous integration）"></a>持续集成（Continuous integration）</h2><p>频繁地向一个共享仓库提交少量代码变更的软件开发实践。 使用 GitHub Actions，可以创建自定义的 CI 工作流，以自动构建并测试你的代码。 从你的仓库中，你可以查看代码变更的状态和工作流中每个操作的详细日志。 CI 通过提供代码变更的及时反馈来更快地检测并解决 bugs，从而节省开发人员的时间。</p>
+<h2 id="持续部署（Continuous-deployment）"><a href="#持续部署（Continuous-deployment）" class="headerlink" title="持续部署（Continuous deployment）"></a>持续部署（Continuous deployment）</h2><p>持续部署建立在持续集成的基础上。 当提交新代码和通过你的 CI 测试时，代码将自动部署到生产环境中。 使用 GitHub Actions，可以创建自定义的 CD 工作流，以便从你的仓库自动部署代码到任何云、自托管服务或平台。 CD 通过自动化部署过程节省开发人员的时间，并更快地向你的客户部署经过测试的、稳定的代码变更。</p>
+<h2 id="GitHub-Actions-的一些术语"><a href="#GitHub-Actions-的一些术语" class="headerlink" title="GitHub Actions 的一些术语"></a>GitHub Actions 的一些术语</h2><ul>
+<li><p>workflow （工作流程）<br>持续集成一次运行的过程，就是一个 workflow</p>
+</li>
+<li><p>job （任务）<br>一个 workflow 由一个或多个 jobs 构成，含义是一次持续集成的运行，可以完成多个任务</p>
+</li>
+<li><p>step（步骤）：<br>每个 job 由多个 step 构成，一步步完成。 一个工作中的每个步骤都在相同的虚拟环境中执行，从而允许使用文件系统共享信息</p>
+</li>
+<li><p>action （动作）：<br>每个 step 可以依次执行一个或多个命令（action）。 你可以创建自己的action、使用 GitHub 社区共享的action</p>
+</li>
+</ul>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>上述的内容是任务的组成，以及可以达成的目标</p>
+<ul>
+<li>监听到git事件时，可手动或自动执行任务（编译、测试、打包、部署等）</li>
+<li>设置为定时任务，自动执行</li>
+</ul>
+<h2 id="使用该功能可以实现的功能："><a href="#使用该功能可以实现的功能：" class="headerlink" title="使用该功能可以实现的功能："></a>使用该功能可以实现的功能：</h2><ul>
+<li><input checked disabled type="checkbox"> 完成项目的打包、编译、部署</li>
+<li><input disabled type="checkbox"> 定时发送天气邮件</li>
+<li><input disabled type="checkbox"> 定时发送小说的更新章节</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/18/tips/" rel="next" title="tips">
+                <i class="fa fa-chevron-left"></i> tips
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://cdn13.mudu.tv/assets/upload/editor/156956940814741.png" alt="随缘补刀">
+          <p class="site-author-name" itemprop="name">随缘补刀</p>
+           
+              <p class="site-description motion-element" itemprop="description">write something here ...</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成（Continuous-integration）"><span class="nav-number">1.</span> <span class="nav-text">持续集成（Continuous integration）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续部署（Continuous-deployment）"><span class="nav-number">2.</span> <span class="nav-text">持续部署（Continuous deployment）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-Actions-的一些术语"><span class="nav-number">3.</span> <span class="nav-text">GitHub Actions 的一些术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解"><span class="nav-number">4.</span> <span class="nav-text">理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用该功能可以实现的功能："><span class="nav-number">5.</span> <span class="nav-text">使用该功能可以实现的功能：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">随缘补刀</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
