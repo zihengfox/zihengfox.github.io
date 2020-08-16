@@ -4,15 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" integrity="sha384-4FeI0trTH/PCsLWrGCD1mScoFu9Jf2NdknFdFoJhXZFwsvzZ3Bo5sAh7+zL8Xgnd" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://cdn.staticfile.org/normalize/8.0.1/normalize.min.css">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h1 {
+            padding-top: 50px;
+        }
+        .tac {
+            text-align: center;
+        }
+        .wrap {
+            margin: 40px auto;
+            max-width: 400px;
+        }
+        label {
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <div v-for="(item, index) in values">
+        <h1 class="tac">关于 思否 数据联动问题的回答 demo</h1>
+        <br>
+        <p class="tac">原问题链接：<a href="https://segmentfault.com/q/1010000023150265?_ea=55759637">数据处理的问题</a></p>
+        <br>
+        <div class="wrap" v-for="(item, index) in values">
             <div class="control-group">
-                <label class="control-label">输入{{index + 1}}</label>
+                <label class="control-label">输入<span v-html="index + 1"></span></label>
                 <div class="controls">
                     <input :value="item.value" v-on:input="change(index, $event.target.value)" type="number">
                 </div>
@@ -20,8 +38,8 @@
         </div>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.6.10/vue.js"></script>
+<script src="https://cdn.staticfile.org/blueimp-md5/2.17.0/js/md5.min.js"></script>
 <script>
 
     var app = new Vue({

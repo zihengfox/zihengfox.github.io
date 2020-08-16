@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node_modules/.bin/hexo.cmd s",
+    "start": "hexo s",
     "update": "git add . && git commit -m 'update' && git push"
   },
   "hexo": {
